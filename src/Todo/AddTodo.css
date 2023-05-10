@@ -1,18 +1,14 @@
-.container-add .form_todo {
-    width: 80%;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.todo-form {
+  margin-bottom: 32px;
 
-  .container .form_todo .item {
-    width: 87%;
-    height: 30px;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid black;
-  } 
-  
+}
+
+.todo-input {
+  padding: 14px 32px 14px 16px;
+  border: 2px solid rgba(17, 122, 255, 1);
+  outline: none;
+  width: 320px;
+}
+.todo-button {
+  padding: 10px;
+}

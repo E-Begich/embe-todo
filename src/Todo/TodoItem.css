@@ -1,9 +1,30 @@
-.todo-item {
-    width: 300px;
-    margin: auto;
+.todo-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4px auto;
+    color: rgb(20, 2, 180);
+    font-size: 25px;
+    font-weight: bold;
+    background: rgba(2, 1, 95, 0.212);
+    padding: 16px;
+    border-radius: 5px;
+    width: 90%;
+  }
+
+.complete {
+  text-decoration: line-through darkblue;
+  color: white;
+}
+
+.iconsContainer {
     display: flex;
     align-items: center;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid black;
-}
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  h1 {
+    margin: 32px 0;
+    font-size: 33px;
+  }

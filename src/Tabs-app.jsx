@@ -1,31 +1,42 @@
 import { useState } from "react";
 import "./Tabs-app.css";
-import Add from "./Todo/AddTodo";
+import AddTodo from "./Todo/AddTodo";
 import TodoItem from "./Todo/TodoItem";
 
 function Tabs() {
   const [toggleState, setToggleState] = useState(1);
-  const [todo, setTodo] = useState ([]);
+  const [todos, setTodos] = useState([]);
 
-  const getItem = (item) =>{
-    setTodo((prevState)=>{
-        return [...prevState, item];
-    })
-  };
-
-const getCompleted = (id) =>{
-    setTodo((prevState) =>{
-        return prevState.filter((item, index) =>{
-            return index !== id;
-        })
-    })
-}
-  
   const toggleTab = (index) => {
     setToggleState(index);
   };
 
+  const addTodo = (text) => {
+    let id = 1;
+    if(todos.length > 0) {
+      id = todos[0].id + 1
+    }
+    let todo = {id: id, text: text, completed: false, important: false}
+    let newTodos = [todo, ...todos]
+    setTodos(newTodos)
+  };
 
+  const removeTodo = (id) => {
+    let updatedTodos = [...todos].filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
+
+  const completeTodo = (id) => {
+    let updatedTodos = todos.map((todo) => {
+      if(todo.id === id) {
+        todo.completed = !todo.completed
+      }
+      return todo
+    })
+    setTodos(updatedTodos)
+  }
+
+  let sortedTodos = todos.sort((a, b) => b.important - a.important)
 
   return (
     <div className="container">
@@ -34,19 +45,19 @@ const getCompleted = (id) =>{
           className={toggleState === 1 ? "tabs active-tabs" : "tabs"}
           onClick={() => toggleTab(1)}
         >
-          All
+          Todo List
         </button>
         <button
           className={toggleState === 2 ? "tabs active-tabs" : "tabs"}
           onClick={() => toggleTab(2)}
         >
-          Active
+          Active Tasks
         </button>
         <button
           className={toggleState === 3 ? "tabs active-tabs" : "tabs"}
           onClick={() => toggleTab(3)}
         >
-          Completed
+          Completed Tasks
         </button>
       </div>
 
@@ -54,22 +65,24 @@ const getCompleted = (id) =>{
         <div
           className={toggleState === 1 ? "content  active-content" : "content"}
         >
-          <h2>My Tasks</h2>
-    
           <p>
-            <Add item={getItem}/>
-            {todo &&  todo.map((todo, index)=>(
-                <TodoItem id={index} item={todo} completed={getCompleted}/>
-            ))};
-
+          <div className="todo-app">
+           <h1>Todo List</h1>
+           <AddTodo addTodo={addTodo} />
+           {sortedTodos.map((todo) => {
+           return (
+          <TodoItem removeTodo={removeTodo} completeTodo={completeTodo} todo={todo} key={todo.id}/>
+        )
+      })}
+    </div>
           </p>
         </div>
 
         <div
           className={toggleState === 2 ? "content  active-content" : "content"}
         >
-          <h2>All</h2>
-
+          <h2>Content 2</h2>
+          <hr />
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente
             voluptatum qui adipisci.
@@ -79,8 +92,8 @@ const getCompleted = (id) =>{
         <div
           className={toggleState === 3 ? "content  active-content" : "content"}
         >
-          <h2>Completed</h2>
-  
+          <h2>Content 3</h2>
+          <hr />
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos sed
             nostrum rerum laudantium totam unde adipisci incidunt modi alias!
@@ -96,4 +109,3 @@ const getCompleted = (id) =>{
 }
 
 export default Tabs;
-
